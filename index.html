@@ -26,10 +26,14 @@
 	background: white;
 	color : #3b3b3b;
 	letter-spacing: -0.9px;
-	touch-action: pan-x pan-y;
 }
 
-body {
+html, body {
+	touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overscroll-behavior: none;
 	overflow-x: hidden;
 	touch-action: pan-x pan-y;
 }
@@ -249,6 +253,7 @@ main h2 {
 		<button class="complete-btn">정품 확인 결과 보기</button>
 	</div>
 <script>	
+	// 체크버튼 클릭 이벤트 [s]
 	function checkBtnClick() {
 		$('.btn').click(function() {
                 let category = $(this).attr('class').split(' ')[1]; // 두 번째 클래스를 가져옴 (gender, age, source, factor 중 하나)
@@ -266,7 +271,27 @@ main h2 {
                 }
             });
 		}
+		// 체크버튼 클릭 이벤트 [e]		
 	checkBtnClick();
+
+	// iOS 짐 및 확대기능 막기
+	function iOSZoomScale() {
+		$(document).on('gesturestart', function(e) {
+			e.preventDefault(); // iOS Pinch-to-Zoom 비활성화
+		});
+
+		let lastTouchEnd = 0;
+		$(document).on('touchend', function(event) {
+			let now = new Date().getTime();
+			if (now - lastTouchEnd <= 300) {
+				event.preventDefault(); // iOS 더블 탭 확대 방지
+			}
+			lastTouchEnd = now;
+		});
+		console.log('구동중');
+	}
+	iOSZoomScale();
+
 </script>
 </body>
 </html>

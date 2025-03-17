@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설문조사</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .survey-box {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+        }
+        .btn.selected::after {
+            content: "\2713"; /* 체크 표시 */
+            position: absolute;
+            right: 10px;
+            font-size: 16px;
+            color: white;
+        }
+        .btn.select {
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #0056b3;
+        }
+        .btn.selected {
+            background-color: #28a745;
+            color: white;
+            border: 1px solid #1e7e34;
+        }
+        .submit-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>더 나은 서비스 제공을 위해 간단한 설문에 참여해주세요!</h1>
+    <div class="survey-box">
+        <p>성별을 선택해 주세요.</p>
+        <button class="btn gender">여성</button>
+        <button class="btn gender">남성</button>
+        
+        <p>연령대를 선택해 주세요.</p>
+        <button class="btn age">10대</button>
+        <button class="btn age">20대</button>
+        <button class="btn age">30대</button>
+        <button class="btn age">40대</button>
+        <button class="btn age">50대 이상</button>
+        
+        <p>구입하신 제품을 어떤 경로로 알게 되셨나요?</p>
+        <button class="btn source">TV / 라디오 광고</button>
+        <button class="btn source">지인 추천</button>
+        <button class="btn source">SNS</button>
+        <button class="btn source">온라인 광고</button>
+        
+        <p>구매 결정에 가장 큰 영향을 미치는 요소는?</p>
+        <button class="btn factor">온라인 광고</button>
+        <button class="btn factor">지인 추천</button>
+        <button class="btn factor">리뷰</button>
+        <button class="btn factor">매체 광고</button>
+        <button class="btn factor">SNS 컨텐츠</button>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $('.btn').click(function() {
+                let category = $(this).attr('class').split(' ')[1]; // 두 번째 클래스를 가져옴 (gender, age, source, factor 중 하나)
+                let isSelected = $(this).hasClass(category === 'gender' || category === 'age' ? 'select' : 'selected');
+
+                if (isSelected) {
+                    // 선택된 상태라면 해제
+                    $(this).removeClass(category === 'gender' || category === 'age' ? 'select' : 'selected');
+                } else {
+                    // 같은 카테고리의 버튼 선택 해제
+                    $('.' + category).removeClass(category === 'gender' || category === 'age' ? 'select' : 'selected');
+
+                    // 현재 버튼만 선택
+                    $(this).addClass(category === 'gender' || category === 'age' ? 'select' : 'selected');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
